@@ -9,7 +9,11 @@ import {
 } from 'react-native'
 import {useData} from '../context/useData'
 
-const AddList = ({close}) => {
+interface Props {
+  close: boolean
+}
+
+const AddList: React.FC<Props> = ({close}) => {
   const [selectedColor, setSelectedColor] = useState('#fa8072')
   const {data, setData} = useData()
   const {name, setName} = useData()
@@ -40,9 +44,11 @@ const AddList = ({close}) => {
       {
         name,
         color: selectedColor,
-        todos: [{
-           title: "something",
-        completed: false}
+        todos: [
+          {
+            title: 'something',
+            completed: false,
+          },
         ],
       },
     ])

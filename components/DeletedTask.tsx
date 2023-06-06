@@ -1,8 +1,29 @@
 import React, {useContext} from 'react'
 import {Text, StyleSheet, TouchableOpacity, SafeAreaView} from 'react-native'
 import {DataContext} from '../context/useData'
+export interface Todo {
+  completed: boolean
+  title: string
+}
+export interface TodoList {
+  color: string
+  name: string
+  todos: Todo[]
+}
 
-const DeletedTask = ({list, closeModal, index: taskIndex, nameIndex}) => {
+interface Props {
+  list: TodoList
+  closeModal: boolean
+  index: number
+  nameIndex: number
+}
+
+const DeletedTask: React.FC<Props> = ({
+  list,
+  closeModal,
+  index: taskIndex,
+  nameIndex,
+}) => {
   const {data, setData} = useContext(DataContext)
 
   const deletedTodo = () => {

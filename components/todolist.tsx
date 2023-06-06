@@ -2,7 +2,22 @@ import React, {useContext, useState} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, Modal} from 'react-native'
 import TodoModal from './TodoModal'
 
-const TodoList = ({list}) => {
+export interface Todo {
+  completed: boolean
+  title: string
+}
+
+export interface TodoList {
+  color: string
+  name: string
+  todos: Todo[]
+}
+
+interface Props {
+  list: TodoList
+}
+
+const TodoList: React.FC<Props> = ({list}) => {
   const [visibleList, setVisibleList] = useState(false)
   const toggleListModal = () => {
     setVisibleList(!visibleList)

@@ -11,6 +11,17 @@ import {useData} from '../context/useData'
 import TodoList from '../components/TodoList'
 import AddList from '../components/AddList'
 
+// type Todo = {
+//   completed: boolean
+//   title: string
+// }
+
+// type TodoList = {
+//   color: string
+//   name: string
+//   todos: Todo[]
+// }
+
 const HomeScreen = () => {
   const [addTodoVisible, setAddTodoVisible] = useState(false)
   const {data} = useData()
@@ -19,6 +30,7 @@ const HomeScreen = () => {
   }
 
   const renderList = todoList => {
+    console.log(todoList)
     return <TodoList list={todoList} />
   }
 

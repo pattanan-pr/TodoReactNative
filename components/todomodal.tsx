@@ -9,11 +9,27 @@ import {
   Modal,
 } from 'react-native'
 import {DataContext} from '../context/useData'
-import AddList from './AddList'
 import DeletedTask from './DeletedTask'
 import AddTask from './AddTask'
 
-const TodoModal = ({closeModal, list}) => {
+export interface Todo {
+  completed: boolean
+  title: string
+}
+
+export interface TodoList {
+  color: string
+  name: string
+  todos: Todo[]
+}
+
+interface Props {
+  list: TodoList
+  closeModal: boolean
+  index: number
+}
+
+const TodoModal: React.FC<Props> = ({closeModal, list}) => {
   const {data, setData} = useContext(DataContext)
   const [addTask, setAddTask] = useState(false)
   const [indexTask, setIndex] = useState(0)
