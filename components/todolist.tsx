@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useContext, useState} from 'react'
 import {
   View,
   Text,
@@ -8,16 +8,22 @@ import {
   Alert,
 } from 'react-native'
 import TodoModal from './todomodal'
+import {useData} from '../context/useData'
 
 const TodoList = ({list}) => {
   const [visibleList, setVisibleList] = useState(false)
+
+  // console.log(list, 'asoqkd')
+
+  // console.log(list.color, 'list')
 
   const toggleListModal = () => {
     setVisibleList(!visibleList)
   }
 
-  const completedTask = list.todos.filter(todos => todos.completed).length
-  const remainTask = list.todos.length - completedTask
+  // const completedTask = list.todos.filter(todos => todos.completed).length
+  // const remainTask = list.todos.length - completedTask
+  // console.log(completedTask)
   return (
     <View>
       <Modal
@@ -28,12 +34,12 @@ const TodoList = ({list}) => {
       </Modal>
       <TouchableOpacity
         onPress={() => toggleListModal()}
-        style={[styles.listcont, {backgroundColor: list.colors}]}>
+        style={[styles.listcont, {backgroundColor: list.color}]}>
         <Text style={styles.title} numberOfLines={1}>
           {list.name}
         </Text>
 
-        <View>
+        {/* <View>
           <View style={{alignItems: 'center'}}>
             <Text style={styles.count}>{remainTask}</Text>
             <Text style={styles.subtitle}>Remaining</Text>
@@ -42,7 +48,7 @@ const TodoList = ({list}) => {
             <Text style={styles.count}>{completedTask}</Text>
             <Text style={styles.subtitle}>Completed</Text>
           </View>
-        </View>
+        </View> */}
       </TouchableOpacity>
     </View>
   )
@@ -60,7 +66,7 @@ const styles = StyleSheet.create({
   title: {
     fontSize: 28,
     fontWeight: '700',
-    color: '#ffffff',
+    color: '#ffff',
   },
   listcont: {
     paddingVertical: 32,

@@ -7,11 +7,13 @@ import {
   KeyboardAvoidingView,
   TextInput,
 } from 'react-native'
-import Mockdata from '../Mockdata'
+import {useData} from '../context/useData'
 
 const AddList = ({close}) => {
-  const [name, setName] = useState('')
   const [selectedColor, setSelectedColor] = useState('#fa8072')
+  const {data, setData} = useData()
+  const {name, setName} = useData()
+
   const colors = [
     '#fa8072',
     '#808000',
@@ -33,12 +35,17 @@ const AddList = ({close}) => {
   }
 
   const createTodo = () => {
-    Mockdata.push({
-      name,
-      colors: selectedColor,
-      todos: [],
-    })
-    setName('')
+    setData(prevData => [
+      ...prevData,
+      {
+        name,
+        color: selectedColor,
+        todos: [{
+           title: "something",
+        completed: false}
+        ],
+      },
+    ])
     close()
   }
 

@@ -1,17 +1,14 @@
+import React, {useContext} from 'react'
 import {Text, StyleSheet, TouchableOpacity, SafeAreaView} from 'react-native'
-import React from 'react'
-import Mockdata from '../Mockdata'
+import {DataContext} from '../context/useData'
 
-const DelatedTask = ({
-  list,
-  closeModal,
-  index: taskIndex,
-  namei: nameIndex,
-}) => {
+const DeletedTask = ({list, closeModal, index: taskIndex, nameIndex}) => {
+  const {data, setData} = useContext(DataContext)
+
   const deletedTodo = () => {
-    const updatedTodos = [...Mockdata[nameIndex].todos]
-    updatedTodos.splice(taskIndex, 1)
-    Mockdata[nameIndex].todos = updatedTodos
+    const updatedData = [...data]
+    updatedData[nameIndex].todos.splice(taskIndex, 1)
+    setData(updatedData)
     closeModal()
   }
 
@@ -23,7 +20,8 @@ const DelatedTask = ({
     </SafeAreaView>
   )
 }
-export default DelatedTask
+
+export default DeletedTask
 
 const styles = StyleSheet.create({
   container: {
@@ -31,24 +29,5 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  divider: {
-    backgroundColor: '#b0e0e6',
-    height: 1,
-    flex: 1,
-    alignSelf: 'center',
-  },
-  title: {
-    fontSize: 38,
-    fontWeight: '400',
-    color: '#000000',
-    marginTop: 50,
-    marginBottom: 30,
-  },
-  listconst: {
-    paddingVertical: 24,
-    fontWeight: '500',
-    flexDirection: 'row',
-    alignItems: 'center',
   },
 })

@@ -6,17 +6,29 @@ import {
   TouchableOpacity,
   TextInput,
 } from 'react-native'
-import Mockdata from '../Mockdata'
+import {useData} from '../context/useData'
 
 const DetailTask = ({list, closeModal}) => {
   const [taskName, setTaskName] = useState('')
+  const {data, setData} = useData()
 
   const addTask = () => {
-    const ID = Mockdata.findIndex(value => value.name === list.name)
-    Mockdata[ID].todos.push({
-      title: taskName,
-      completed: false,
+    const updatedData = data.map(item => {
+      if (item.name === list.name) {
+        return {
+          ...item,
+          todos: [
+            ...item.todos,
+            {
+              title: taskName,
+              completed: false,
+            },
+          ],
+        }
+      }
+      return item
     })
+    setData(updatedData)
     setTaskName('')
     closeModal()
   }
@@ -28,7 +40,7 @@ const DetailTask = ({list, closeModal}) => {
         style={{position: 'absolute', top: 64, right: 32, zIndex: 10}}>
         <Text>back</Text>
       </TouchableOpacity>
-      <Text style={styles.title}>Task Detail?</Text>
+      <Text style={styles.title}>Task Detail</Text>
       <TextInput
         style={styles.input}
         placeholder="Add your task name"
@@ -50,12 +62,6 @@ const styles = StyleSheet.create({
     backgroundColor: '#fff',
     alignItems: 'center',
     justifyContent: 'center',
-  },
-  divider: {
-    backgroundColor: '#b0e0e6',
-    height: 1,
-    flex: 1,
-    alignSelf: 'center',
   },
   title: {
     fontSize: 38,

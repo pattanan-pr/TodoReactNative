@@ -1,3 +1,4 @@
+import React, { useState, useContext } from 'react';
 import {
   Text,
   View,
@@ -6,58 +7,53 @@ import {
   TouchableOpacity,
   FlatList,
   Modal,
-} from 'react-native'
-import React, {useState} from 'react'
-import DetailTask from './addtaskpage'
-import DelatedTask from './deletetaskpage'
-import Mockdata from '../Mockdata'
+} from 'react-native';
+import { DataContext } from '../context/useData';
+import DetailTask from './addtaskpage';
+import DeletedTask from './deletetaskpage';
 
-const TodoModal = ({closeModal, list}) => {
-  const [addTask, setAddTask] = useState(false)
-  const [indexTask, setIndex] = useState(0)
-  const [deletedTask, setDelTask] = useState(false)
-  const [nameInd, setNameInd] = useState(0)
+const TodoModal = ({ closeModal, list }) => {
+  const { data, setData } = useContext(DataContext);
+  const [addTask, setAddTask] = useState(false);
+  const [indexTask, setIndex] = useState(0);
+  const [deletedTask, setDelTask] = useState(false);
+  const [nameInd, setNameInd] = useState(0);
 
   const toggleAddTask = () => {
-    setAddTask(!addTask)
-  }
+    setAddTask(!addTask);
+  };
 
-  const toggleDeletedTask = index => {
-    const nameIndex = Mockdata.findIndex(element => list.name === element.name)
-    setNameInd(nameIndex)
-    setDelTask(!deletedTask)
-    setIndex(index)
-  }
+  const toggleDeletedTask = (index) => {
+    const nameIndex = data.findIndex((element) => list.name === element.name);
+    setNameInd(nameIndex);
+    setDelTask(!deletedTask);
+    setIndex(index);
+  };
 
-  const renderTodo = (item, index) => {
+  const renderTodo = ({ item, index }) => {
     return (
       <View style={styles.listconst}>
         <TouchableOpacity onPress={() => toggleDeletedTask(index)}>
-          <Text style={{fontSize: 20}}>{item.title}</Text>
+          <Text style={{ fontSize: 20 }}>{item.title}</Text>
         </TouchableOpacity>
       </View>
-    )
-  }
+    );
+  };
 
   const deletedTodoList = () => {
-    const indexDelete = Mockdata.findIndex(
-      element => list.name === element.name,
-    )
-    // console.log(nameInd)
-    Mockdata.splice(indexDelete, 1)
-    closeModal()
-  }
+    const updatedData = [...data];
+    const indexDelete = updatedData.findIndex((element) => list.name === element.name);
+    updatedData.splice(indexDelete, 1);
+    setData(updatedData);
+    closeModal();
+  };
 
   return (
     <SafeAreaView style={styles.container}>
-      <TouchableOpacity
-        onPress={closeModal}
-        style={{position: 'absolute', top: 64, right: 32, zIndex: 10}}>
+      <TouchableOpacity onPress={closeModal} style={{ position: 'absolute', top: 64, right: 32, zIndex: 10 }}>
         <Text>close</Text>
       </TouchableOpacity>
-      <TouchableOpacity
-        onPress={deletedTodoList}
-        style={{position: 'absolute', top: 64, left: 32, zIndex: 10}}>
+      <TouchableOpacity onPress={deletedTodoList} style={{ position: 'absolute', top: 64, left: 32, zIndex: 10 }}>
         <Text>Delete</Text>
       </TouchableOpacity>
       <View style={styles.container}>
@@ -65,37 +61,27 @@ const TodoModal = ({closeModal, list}) => {
 
         <FlatList
           data={list.todos}
-          renderItem={({item, index}) => renderTodo(item, index)}
-          keyExtractor={item => item.title}
+          renderItem={renderTodo}
+          keyExtractor={(item) => item.title}
         />
+
         <TouchableOpacity onPress={toggleAddTask}>
           <Text>Add Detail</Text>
         </TouchableOpacity>
 
-        <Modal
-          animationType="slide"
-          visible={addTask}
-          onRequestClose={toggleAddTask}>
-          <DetailTask list={list} closeModal={() => toggleAddTask()} />
+        <Modal animationType="slide" visible={addTask} onRequestClose={toggleAddTask}>
+          <DetailTask list={list} closeModal={toggleAddTask} />
         </Modal>
 
-        <Modal
-          animationType="slide"
-          visible={deletedTask}
-          onRequestClose={toggleDeletedTask}>
-          <DelatedTask
-            list={list}
-            index={indexTask}
-            namei={nameInd}
-            closeModal={() => toggleDeletedTask()}
-          />
+        <Modal animationType="slide" visible={deletedTask} onRequestClose={toggleDeletedTask}>
+          <DeletedTask list={list} index={indexTask} nameIndex={nameInd} closeModal={toggleDeletedTask} />
         </Modal>
       </View>
     </SafeAreaView>
-  )
-}
+  );
+};
 
-export default TodoModal
+export default TodoModal;
 
 const styles = StyleSheet.create({
   container: {
@@ -119,8 +105,6 @@ const styles = StyleSheet.create({
   },
   listconst: {
     paddingVertical: 24,
-    fontWeight: '500',
-    flexDirection: 'row',
-    alignItems: 'center',
-  },
-})
+    fontWeight: '500'
+
+  }})
