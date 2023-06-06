@@ -8,8 +8,8 @@ import {
   Modal,
 } from 'react-native'
 // import Mockdata from './Data'
-import TodoList from './components/todolist'
-import AddList from './components/addlistpage'
+import TodoList from './components/TodoList'
+import AddList from './components/AddList'
 import DataProvider from './context/DataProvider'
 import {useData} from './context/useData'
 import HomeScreen from './screens/HomeScreen'

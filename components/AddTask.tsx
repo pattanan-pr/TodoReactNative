@@ -8,7 +8,7 @@ import {
 } from 'react-native'
 import {useData} from '../context/useData'
 
-const DetailTask = ({list, closeModal}) => {
+const AddTask = ({list, closeModal}) => {
   const [taskName, setTaskName] = useState('')
   const {data, setData} = useData()
 
@@ -54,7 +54,7 @@ const DetailTask = ({list, closeModal}) => {
   )
 }
 
-export default DetailTask
+export default AddTask
 
 const styles = StyleSheet.create({
   container: {

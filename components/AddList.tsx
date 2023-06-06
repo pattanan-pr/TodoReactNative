@@ -46,6 +46,7 @@ const AddList = ({close}) => {
         ],
       },
     ])
+    setName('')
     close()
   }
 

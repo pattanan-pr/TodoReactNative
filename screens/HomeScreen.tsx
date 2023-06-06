@@ -8,20 +8,20 @@ import {
 } from 'react-native'
 import React, {useState} from 'react'
 import {useData} from '../context/useData'
-import TodoList from '../components/todolist'
-import AddList from '../components/addlistpage'
+import TodoList from '../components/TodoList'
+import AddList from '../components/AddList'
 
 const HomeScreen = () => {
-  const [addTodovisible, setAddTodovisible] = useState(false)
-
+  const [addTodoVisible, setAddTodoVisible] = useState(false)
   const {data} = useData()
   const toggleAddTodoModal = () => {
-    setAddTodovisible(!addTodovisible)
+    setAddTodoVisible(!addTodoVisible)
   }
 
   const renderList = todoList => {
     return <TodoList list={todoList} />
   }
+
   return (
     <View style={styles.container}>
       <View style={{flexDirection: 'row'}}>
@@ -47,7 +47,7 @@ const HomeScreen = () => {
       </View>
       <Modal
         animationType="slide"
-        visible={addTodovisible}
+        visible={addTodoVisible}
         onRequestClose={toggleAddTodoModal}>
         <AddList close={() => toggleAddTodoModal()} />
       </Modal>
