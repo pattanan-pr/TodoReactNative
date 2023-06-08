@@ -12,9 +12,8 @@ import TodoList from '../components/TodoList'
 import AddList from '../components/AddList'
 import {useAuthData} from '../context/AuthContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-import {NavigationContainer} from '@react-navigation/native'
 
-const HomeScreen = () => {
+const HomeScreen = ({navigation}) => {
   const [addTodoVisible, setAddTodoVisible] = useState(false)
   const {data} = useData()
   const {userToken, setUserToken} = useAuthData()
@@ -45,7 +44,9 @@ const HomeScreen = () => {
       </View>
       <Text style={styles.text2}>Hello {userToken}</Text>
       <View style={{marginVertical: 48}}>
-        <TouchableOpacity style={styles.botton2} onPress={toggleAddTodoModal}>
+        <TouchableOpacity
+          style={styles.botton2}
+          onPress={() => navigation.navigate('AddTodo')}>
           <Text style={styles.text3}>+</Text>
         </TouchableOpacity>
       </View>
@@ -58,12 +59,12 @@ const HomeScreen = () => {
           renderItem={({item}) => renderList(item)}
         />
       </View>
-      <Modal
+      {/* <Modal
         animationType="slide"
         visible={addTodoVisible}
         onRequestClose={toggleAddTodoModal}>
         <AddList close={() => toggleAddTodoModal()} />
-      </Modal>
+      </Modal> */}
     </View>
   )
 }

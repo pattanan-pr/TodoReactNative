@@ -18,12 +18,10 @@ export interface TodoList {
   }[]
 }
 interface Props {
-  // list: TodoList
   close: () => void
-  // text: string
 }
 
-const AddList: React.FC<Props> = ({close}) => {
+const AddList: React.FC<Props> = ({navigation}) => {
   const [selectedColor, setSelectedColor] = useState('#fa8072')
   const {setData} = useData()
   const {name, setName} = useData()
@@ -63,14 +61,14 @@ const AddList: React.FC<Props> = ({close}) => {
       },
     ])
     setName('')
-    close()
+    navigation.navigate('Home')
   }
 
   return (
     <KeyboardAvoidingView style={styles.container} behavior="padding">
       <TouchableOpacity
         style={{position: 'absolute', top: 64, right: 32}}
-        onPress={close}>
+        onPress={() => navigation.navigate('Home')}>
         <Text>close</Text>
       </TouchableOpacity>
       <View>
