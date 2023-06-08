@@ -25,8 +25,8 @@ export interface TodoList {
 
 interface Props {
   list: TodoList
-  closeModal: boolean
-  index: number
+  closeModal: () => void
+  // index: number
 }
 
 const TodoModal: React.FC<Props> = ({closeModal, list}) => {

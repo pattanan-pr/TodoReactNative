@@ -8,22 +8,20 @@ import {
 } from 'react-native'
 import {useData} from '../context/useData'
 
-export interface Todo {
-  completed: boolean
-  title: string
-}
-
 export interface TodoList {
   color: string
   name: string
-  todos: Todo[]
+  todos: {
+    title: string
+    completed: boolean
+  }[]
 }
 
 interface Props {
   list: TodoList
-  closeModal: boolean
-  index: number
-  name: string
+  closeModal: () => void
+  // index: number
+  // name: string
 }
 
 const AddTask: React.FC<Props> = ({list, closeModal}) => {

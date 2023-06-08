@@ -13,9 +13,10 @@ export interface TodoList {
 
 interface Props {
   list: TodoList
-  closeModal: boolean
+  closeModal: () => void
   index: number
   nameIndex: number
+  // updatedData: TodoList
 }
 
 const DeletedTask: React.FC<Props> = ({

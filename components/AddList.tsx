@@ -9,13 +9,23 @@ import {
 } from 'react-native'
 import {useData} from '../context/useData'
 
+export interface TodoList {
+  color: string
+  name: string
+  todos: {
+    title: string
+    completed: boolean
+  }[]
+}
 interface Props {
-  close: boolean
+  // list: TodoList
+  close: () => void
+  // text: string
 }
 
 const AddList: React.FC<Props> = ({close}) => {
   const [selectedColor, setSelectedColor] = useState('#fa8072')
-  const {data, setData} = useData()
+  const {setData} = useData()
   const {name, setName} = useData()
 
   const colors = [

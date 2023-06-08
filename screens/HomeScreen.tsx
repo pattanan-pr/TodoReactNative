@@ -10,6 +10,8 @@ import React, {useState} from 'react'
 import {useData} from '../context/useData'
 import TodoList from '../components/TodoList'
 import AddList from '../components/AddList'
+import {useAuthData} from '../context/AuthContext'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 
 // type Todo = {
 //   completed: boolean
@@ -25,10 +27,19 @@ import AddList from '../components/AddList'
 const HomeScreen = () => {
   const [addTodoVisible, setAddTodoVisible] = useState(false)
   const {data} = useData()
+  const {userToken} = useAuthData()
   const toggleAddTodoModal = () => {
     setAddTodoVisible(!addTodoVisible)
+    console.log(userToken)
+    // getUser()
   }
 
+  // const getUser = async () => {
+  //   try {
+  //     const userData = JSON.parse(await AsyncStorage.getItem('username'))
+  //   } catch (error) {
+  //   }
+  // }
   const renderList = todoList => {
     console.log(todoList)
     return <TodoList list={todoList} />

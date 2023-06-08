@@ -1,4 +1,4 @@
-import React, {useContext, useState} from 'react'
+import React, {useState} from 'react'
 import {View, Text, StyleSheet, TouchableOpacity, Modal} from 'react-native'
 import TodoModal from './TodoModal'
 

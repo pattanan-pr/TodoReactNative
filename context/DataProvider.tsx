@@ -1,4 +1,3 @@
-import {View, Text} from 'react-native'
 import React, {useMemo, useState} from 'react'
 import {DataContext} from './useData'
 
