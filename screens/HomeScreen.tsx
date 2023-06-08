@@ -12,51 +12,41 @@ import TodoList from '../components/TodoList'
 import AddList from '../components/AddList'
 import {useAuthData} from '../context/AuthContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
-
-// type Todo = {
-//   completed: boolean
-//   title: string
-// }
-
-// type TodoList = {
-//   color: string
-//   name: string
-//   todos: Todo[]
-// }
+import {NavigationContainer} from '@react-navigation/native'
 
 const HomeScreen = () => {
   const [addTodoVisible, setAddTodoVisible] = useState(false)
   const {data} = useData()
-  const {userToken} = useAuthData()
+  const {userToken, setUserToken} = useAuthData()
+
+  const logout = () => {
+    AsyncStorage.removeItem('username')
+    setUserToken(null)
+  }
   const toggleAddTodoModal = () => {
     setAddTodoVisible(!addTodoVisible)
-    console.log(userToken)
-    // getUser()
   }
-
-  // const getUser = async () => {
-  //   try {
-  //     const userData = JSON.parse(await AsyncStorage.getItem('username'))
-  //   } catch (error) {
-  //   }
-  // }
   const renderList = todoList => {
-    console.log(todoList)
     return <TodoList list={todoList} />
   }
 
   return (
     <View style={styles.container}>
+      <TouchableOpacity style={styles.botton} onPress={logout}>
+        <Text style={styles.text}>logout</Text>
+      </TouchableOpacity>
+
       <View style={{flexDirection: 'row'}}>
         <View style={styles.divider} />
         <Text style={styles.title}>
-          TODO <Text style={{fontWeight: '300', color: '#1e90ff'}}>LIST</Text>
+          TODO <Text style={styles.textlist}>LIST</Text>
         </Text>
         <View style={styles.divider} />
       </View>
+      <Text style={styles.text2}>Hello {userToken}</Text>
       <View style={{marginVertical: 48}}>
-        <TouchableOpacity>
-          <Text onPress={toggleAddTodoModal}>Add</Text>
+        <TouchableOpacity style={styles.botton2} onPress={toggleAddTodoModal}>
+          <Text style={styles.text3}>+</Text>
         </TouchableOpacity>
       </View>
       <View style={{height: 275, paddingLeft: 36}}>
@@ -77,7 +67,6 @@ const HomeScreen = () => {
     </View>
   )
 }
-
 export default HomeScreen
 
 const styles = StyleSheet.create({
@@ -89,7 +78,7 @@ const styles = StyleSheet.create({
   },
   divider: {
     backgroundColor: '#b0e0e6',
-    height: 5,
+    height: 8,
     flex: 1,
     alignSelf: 'center',
   },
@@ -97,5 +86,41 @@ const styles = StyleSheet.create({
     fontSize: 38,
     fontWeight: '800',
     color: '#000000',
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: '500',
+    color: '#fff',
+  },
+  textlist: {
+    fontWeight: '400',
+    color: '#1e90ff',
+  },
+  text2: {
+    fontSize: 14,
+    fontWeight: '500',
+    color: '#6C6B6B',
+  },
+  text3: {
+    fontSize: 20,
+    fontWeight: '800',
+    color: '#fff',
+  },
+  botton: {
+    position: 'absolute',
+    top: 64,
+    right: 32,
+    zIndex: 10,
+    backgroundColor: '#BFBFBF',
+    padding: 10,
+    borderRadius: 10,
+  },
+  botton2: {
+    backgroundColor: '#b0e0e6',
+    padding: 10,
+    borderRadius: 10,
+    height: 40,
+    width: 40,
+    alignItems: 'center',
   },
 })

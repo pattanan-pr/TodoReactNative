@@ -6,47 +6,81 @@ import {
   TouchableOpacity,
   Image,
 } from 'react-native'
-import React, {useContext, useState} from 'react'
+import React, {useContext, useEffect, useState} from 'react'
 import {AuthContext} from '../context/AuthContext'
 import {useAuthData} from '../context/AuthContext'
 import AsyncStorage from '@react-native-async-storage/async-storage'
 
 const LoginScreen = () => {
-  //   const {login, userToken} = useContext(AuthContext)
   const {userToken, setUserToken, password, setPassword} = useAuthData()
   const [user, setUser] = useState('')
   const [pass, setPass] = useState('')
 
-  const storeUser = async userToken => {
+  useEffect(() => {
+    getUser()
+  }, [])
+
+  const storeUser = async () => {
     try {
-      await AsyncStorage.setItem('username', userToken)
+      if (user !== null) {
+        await AsyncStorage.setItem('username', user)
+      } else {
+        await AsyncStorage.removeItem('username')
+      }
     } catch (error) {
       console.log(error)
     }
   }
+
+  const getUser = async () => {
+    try {
+      const savedUser = await AsyncStorage.getItem('username')
+      setUserToken(savedUser)
+      console.log(savedUser)
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   const check = () => {
-    // storeUser(userToken)
+    storeUser(user)
     setUserToken(user)
     setPassword(pass)
-    // console.log({user})
-    // console.log({pass})
   }
+
   return (
     <View style={styles.container}>
       <Image source={require('../assets/hpimg.jpeg')} style={styles.image} />
-      <Text style={styles.title}>Todo App</Text>
+      <Text style={styles.title}>Login</Text>
       <View style={styles.input}>
-        <Text style={{marginLeft: 10, fontSize: 23}}>@</Text>
+        <Text style={{marginLeft: 10, fontSize: 23, color: '#613C10'}}>@</Text>
         <TextInput
-          style={{flex: 1, paddingVertical: 0, marginLeft: 10}}
+          style={{
+            flex: 1,
+            paddingVertical: 0,
+            marginLeft: 10,
+            color: '#613C10',
+          }}
           placeholder="your username"
           onChangeText={text => setUser(text)}
         />
       </View>
       <View style={styles.input}>
-        <Text style={{marginLeft: 10, fontSize: 23}}>@</Text>
+        <Text
+          style={{
+            marginLeft: 10,
+            fontSize: 23,
+            color: '#613C10',
+          }}>
+          @
+        </Text>
         <TextInput
-          style={{flex: 1, paddingVertical: 0, marginLeft: 10}}
+          style={{
+            flex: 1,
+            paddingVertical: 0,
+            marginLeft: 10,
+            color: '#613C10',
+          }}
           placeholder="password"
           secureTextEntry={true}
           onChangeText={text => setPass(text)}
