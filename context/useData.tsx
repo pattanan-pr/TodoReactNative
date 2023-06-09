@@ -1,6 +1,11 @@
 import {createContext, useContext} from 'react'
 
-export const value = {
+type valueType = {
+  // data: any[],
+  // setData:
+}
+
+export const value: valueType = {
   data: [],
   setData: () => undefined,
   name: '',

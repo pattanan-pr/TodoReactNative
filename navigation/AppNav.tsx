@@ -8,7 +8,6 @@ import HomeStack from './HomeStack'
 
 const AppNav = () => {
   const {isLoading, userToken, password} = useContext(AuthContext)
-  console.log(userToken)
   return (
     <View style={styles.container}>
       <NavigationContainer>

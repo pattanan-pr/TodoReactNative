@@ -12,25 +12,20 @@ import {
 import axios from 'axios'
 
 const WeatherPage = ({navigation}) => {
-  const [loading, setLoading] = useState(false)
   const [userul, setUserul] = useState('thailand')
   const [userserch, setUserSearch] = useState('thailand')
   const [data, setData] = useState({main: {temp: 0}})
 
-  const fetchData = async urlstr2 => {
-    setLoading(true)
+  const fetchData = async (urlstr2: string) => {
     try {
       const response = await axios.get(
         'https://api.openweathermap.org/data/2.5/weather?&appid=3a17de987e3d08b15d6eebd25e005912&units=metric' +
           '&q=' +
           urlstr2,
       )
-      console.log(response.data, 'hello')
       setData(response.data)
-      setLoading(false)
     } catch (error) {
       console.log(error)
-      setLoading(false)
     }
   }
 
@@ -45,61 +40,54 @@ const WeatherPage = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      {loading ? (
-        <ActivityIndicator />
-      ) : (
-        <ImageBackground
-          source={require('../assets/bg.jpg')}
-          resizeMode="cover"
-          style={styles.image}>
-          <View>
-            <View style={{marginBottom: 30}}>
-              <TouchableOpacity
-                style={{
-                  position: 'absolute',
-                  top: -404,
-                  left: 32,
-                  zIndex: 10,
-                }}
-                onPress={() => navigation.goBack()}>
-                <Text style={{color: '#fff'}}>back</Text>
+      <ImageBackground
+        source={require('../assets/bg.jpg')}
+        resizeMode="cover"
+        style={styles.image}>
+        <View>
+          <View style={{marginBottom: 30}}>
+            <TouchableOpacity
+              style={{
+                position: 'absolute',
+                top: -404,
+                left: 32,
+                zIndex: 10,
+              }}
+              onPress={() => navigation.goBack()}>
+              <Text style={{color: '#fff'}}>back</Text>
+            </TouchableOpacity>
+          </View>
+          <View style={styles.containertext}>
+            <View style={styles.containtop}>
+              <Image
+                source={require('../assets/navi.png')}
+                style={styles.icon2}
+              />
+              <View style={styles.input}>
+                <TextInput
+                  placeholder="Search"
+                  style={styles.text}
+                  onChangeText={(text) => setUserul(text)}
+                />
+              </View>
+              <TouchableOpacity onPress={searchTown}>
+                <Image
+                  source={require('../assets/icon.png')}
+                  style={styles.icon}
+                />
               </TouchableOpacity>
             </View>
-            <View style={styles.containertext}>
-              <View style={styles.containtop}>
-                <Image
-                  source={require('../assets/navi.png')}
-                  style={styles.icon2}
-                />
-                <View style={styles.input}>
-                  <TextInput
-                    placeholder="Search"
-                    style={styles.text}
-                    onChangeText={text => setUserul(text)}
-                  />
-                </View>
-                <TouchableOpacity onPress={searchTown}>
-                  <Image
-                    source={require('../assets/icon.png')}
-                    style={styles.icon}
-                  />
-                </TouchableOpacity>
-              </View>
-              {/* <View> */}
-              {/* <Image
-                  source={require('../assets/clound.png')}
-                  style={styles.icon3}
-                /> */}
-              <Text style={styles.title}>
-                {data?.main?.temp}
-                <Text style={styles.textlist}>°C</Text>
-              </Text>
-              <Text style={styles.text2}>{userserch}</Text>
-            </View>
+            <Text style={styles.title}>
+              {data?.main?.temp}
+              <Text style={styles.textlist}>°C</Text>
+            </Text>
+            <Text style={styles.text2}>{userserch}</Text>
+            <Text style={styles.text3}>
+              {data?.weather?.length && data?.weather[0]?.description}
+            </Text>
           </View>
-          {/* </View> */}
-        </ImageBackground>
-      )}
+        </View>
+      </ImageBackground>
     </View>
   )
 }
@@ -137,6 +125,11 @@ const styles = StyleSheet.create({
     fontWeight: '500',
     color: '#ffff',
     marginTop: 20,
+  },
+  text3: {
+    fontSize: 18,
+    fontWeight: '400',
+    color: '#ccc',
   },
   textlist: {
     fontSize: 80,

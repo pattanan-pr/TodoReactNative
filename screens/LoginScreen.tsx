@@ -36,7 +36,6 @@ const LoginScreen = () => {
     try {
       const savedUser = await AsyncStorage.getItem('username')
       setUserToken(savedUser)
-      // console.log(savedUser)
     } catch (error) {
       console.log(error)
     }
@@ -62,7 +61,7 @@ const LoginScreen = () => {
             color: '#613C10',
           }}
           placeholder="your username"
-          onChangeText={text => setUser(text)}
+          onChangeText={(text) => setUser(text)}
         />
       </View>
       <View style={styles.input}>
@@ -83,7 +82,7 @@ const LoginScreen = () => {
           }}
           placeholder="password"
           secureTextEntry={true}
-          onChangeText={text => setPass(text)}
+          onChangeText={(text) => setPass(text)}
         />
         <TouchableOpacity>
           <Text style={{color: '#ccc'}}>Forgot password?</Text>
