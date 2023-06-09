@@ -1,18 +1,29 @@
-import {View, Text, StyleSheet} from 'react-native'
+import {View, Text, StyleSheet, TouchableOpacity} from 'react-native'
+import AsyncStorage from '@react-native-async-storage/async-storage'
 import React from 'react'
-import { TouchableOpacity } from 'react-native-gesture-handler'
+import {useAuthData} from '../context/AuthContext'
 
 const FirstPage = ({navigation}) => {
+  const {setUserToken} = useAuthData()
+  const logout = () => {
+    AsyncStorage.removeItem('username')
+    setUserToken(null)
+  }
+
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Please selesct your option</Text>
+      <TouchableOpacity style={styles.logoutButton} onPress={logout}>
+        <Text style={styles.text}>Logout</Text>
+      </TouchableOpacity>
+      <Text style={styles.title}>Please select your option</Text>
       <TouchableOpacity
-        style={styles.botton}
+        style={styles.button}
         onPress={() => navigation.navigate('Home')}>
         <Text style={styles.text3}>Todo App</Text>
       </TouchableOpacity>
       <TouchableOpacity
-        style={styles.botton}>
+        style={styles.button}
+        onPress={() => navigation.navigate('WeatherPage')}>
         <Text style={styles.text3}>Weather App</Text>
       </TouchableOpacity>
     </View>
@@ -20,7 +31,6 @@ const FirstPage = ({navigation}) => {
 }
 
 export default FirstPage
-
 
 const styles = StyleSheet.create({
   container: {
@@ -35,29 +45,7 @@ const styles = StyleSheet.create({
     color: '#000000',
     marginBottom: 50,
   },
-  input: {
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: '#000',
-    borderRadius: 10,
-    height: 50,
-    marginTop: 8,
-    paddingHorizontal: 16,
-    fontSize: 18,
-  },
-  create: {
-    marginTop: 24,
-    borderRadius: 10,
-    height: 50,
-    alignItems: 'center',
-    justifyContent: 'center',
-  },
-  colorSelect: {
-    width: 30,
-    height: 30,
-    borderRadius: 5,
-    marginHorizontal: 5,
-  },
-  botton: {
+  button: {
     backgroundColor: '#b0e0e6',
     padding: 10,
     borderRadius: 10,
@@ -68,6 +56,20 @@ const styles = StyleSheet.create({
   text3: {
     fontSize: 20,
     fontWeight: '800',
+    color: '#fff',
+  },
+  logoutButton: {
+    position: 'absolute',
+    backgroundColor: '#BFBFBF',
+    padding: 10,
+    borderRadius: 10,
+    top: 64,
+    right: 32,
+    zIndex: 10,
+  },
+  text: {
+    fontSize: 16,
+    fontWeight: '500',
     color: '#fff',
   },
 })

@@ -11,17 +11,13 @@ import {useData} from '../context/useData'
 import TodoList from '../components/TodoList'
 import AddList from '../components/AddList'
 import {useAuthData} from '../context/AuthContext'
-import AsyncStorage from '@react-native-async-storage/async-storage'
+
 
 const HomeScreen = ({navigation}) => {
   const [addTodoVisible, setAddTodoVisible] = useState(false)
   const {data} = useData()
   const {userToken, setUserToken} = useAuthData()
-
-  const logout = () => {
-    AsyncStorage.removeItem('username')
-    setUserToken(null)
-  }
+  
   const toggleAddTodoModal = () => {
     setAddTodoVisible(!addTodoVisible)
   }
@@ -31,10 +27,11 @@ const HomeScreen = ({navigation}) => {
 
   return (
     <View style={styles.container}>
-      <TouchableOpacity style={styles.botton} onPress={logout}>
-        <Text style={styles.text}>logout</Text>
+      <TouchableOpacity
+        style={{position: 'absolute', top: 64, left: 32, zIndex: 10}}
+        onPress={() => navigation.goBack()}>
+        <Text>back</Text>
       </TouchableOpacity>
-
       <View style={{flexDirection: 'row'}}>
         <View style={styles.divider} />
         <Text style={styles.title}>

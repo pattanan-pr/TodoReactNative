@@ -36,7 +36,7 @@ const LoginScreen = () => {
     try {
       const savedUser = await AsyncStorage.getItem('username')
       setUserToken(savedUser)
-      console.log(savedUser)
+      // console.log(savedUser)
     } catch (error) {
       console.log(error)
     }
