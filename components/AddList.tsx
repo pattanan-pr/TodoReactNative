@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useEffect, useState} from 'react'
 import {
   Text,
   View,
@@ -25,6 +25,9 @@ const AddList: React.FC<Props> = ({navigation}) => {
   const [selectedColor, setSelectedColor] = useState('#fa8072')
   const {setData} = useData()
   const {name, setName} = useData()
+  useEffect(() => {
+    setName('')
+  }, [])
 
   const colors = [
     '#fa8072',
@@ -37,7 +40,7 @@ const AddList: React.FC<Props> = ({navigation}) => {
   ]
 
   const renderColor = () => {
-    return colors.map(color => (
+    return colors.map((color) => (
       <TouchableOpacity
         key={color}
         style={[styles.colorSelect, {backgroundColor: color}]}
@@ -47,7 +50,7 @@ const AddList: React.FC<Props> = ({navigation}) => {
   }
 
   const createTodo = () => {
-    setData(prevData => [
+    setData((prevData) => [
       ...prevData,
       {
         name,
@@ -60,7 +63,7 @@ const AddList: React.FC<Props> = ({navigation}) => {
         ],
       },
     ])
-    setName('')
+
     navigation.navigate('Home')
   }
 
@@ -77,7 +80,7 @@ const AddList: React.FC<Props> = ({navigation}) => {
           style={styles.input}
           placeholder="What is your task?"
           value={name}
-          onChangeText={text => setName(text)}
+          onChangeText={(text) => setName(text)}
         />
         <View
           style={{

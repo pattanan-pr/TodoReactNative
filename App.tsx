@@ -15,8 +15,6 @@ const App = () => {
         <View style={{flex: 1}}>
           <AppNav />
         </View>
-        {/* <LoginScreen /> */}
-        {/* <<HomeScreen />> */}
       </DataProvider>
     </AuthProvider>
   )
