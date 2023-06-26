@@ -13,6 +13,6 @@ workflows:
       - name: Build Android release
         script: |
           cd android
-          ./gradlew assembleRelease --stacktrace
+          ./gradlew assembleRelease --stacktrace --info
     artifacts:
       - android/app/build/outputs/**/*.apk
